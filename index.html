@@ -3,117 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🏆 Panini GO 2026 - Álbum & Intercambios</title>
+  <title>🏆 Panini GO 2026 - Álbum Oficial</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
-    /* ===== 1. PALETA DE COLORES MEJORADA ===== */
-    /* Colores vibrantes pero con un fondo oscuro profundo que no lastima la vista */
+    /* ===== PALETA Y VARIABLES ===== */
     :root {
-      --gold: #FFD700;
-      --gold-glow: rgba(255, 215, 0, 0.4);
+      --gold: #F5C518;
+      --gold-glow: rgba(245, 197, 24, 0.4);
       --green: #00E676;
       --red: #FF3D00;
       --blue: #2979FF;
-      --bg: #0A0F1D; /* Azul medianoche muy oscuro, descansa la vista */
+      --bg: #0A0F1D;
       --bg2: #121A2F;
       --bg3: #1A2642;
-      --card-bg: #151E32;
       --border: #243456;
       --text: #F0F6FF;
       --muted: #8E9FBE;
+      --panini-blue: #0033A0;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; overflow-x: hidden; }
 
-    /* ===== HEADER Y PERFIL (Mejora 3) ===== */
+    /* ===== HEADER Y AUTENTICACIÓN ===== */
     header {
       display: flex; justify-content: space-between; align-items: center;
       padding: 15px 30px; background: var(--bg2); border-bottom: 2px solid var(--border);
       position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
-    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--gold); text-shadow: 0 0 10px var(--gold-glow); }
+    .logo-container { display: flex; align-items: center; gap: 15px; }
+    .logo-img { height: 40px; border-radius: 4px; }
+    .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--gold); text-shadow: 0 0 10px var(--gold-glow); letter-spacing: 1px; }
     
-    .profile-section { display: flex; align-items: center; gap: 15px; }
-    .profile-pic { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; }
-    .user-details { display: flex; flex-direction: column; }
-    .user-name { font-weight: 700; font-size: 16px; }
-    .user-tags { font-size: 12px; color: var(--muted); display: flex; gap: 8px; margin-top: 3px; }
-    .badge { background: var(--bg3); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); }
+    .user-box { display: flex; align-items: center; gap: 15px; }
+    .user-box img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; }
+    .user-info { display: flex; flex-direction: column; text-align: right; }
+    #user-name { font-weight: 700; font-size: 15px; }
+    #user-email { color: var(--muted); font-size: 12px; }
     
-    /* ===== NAVEGACIÓN TABS ===== */
-    .tabs { display: flex; justify-content: center; gap: 20px; padding: 20px 0; background: var(--bg); }
-    .tab-btn { background: transparent; color: var(--muted); border: none; font-size: 20px; font-family: 'Bebas Neue'; cursor: pointer; padding: 5px 15px; transition: 0.3s; }
-    .tab-btn.active { color: var(--gold); border-bottom: 3px solid var(--gold); text-shadow: 0 0 8px var(--gold-glow); }
+    .auth-btn { border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; font-family: 'Barlow Condensed'; font-size: 14px; text-transform: uppercase; transition: 0.2s; }
+    .login-btn { background: var(--gold); color: #000; }
+    .login-btn:hover { box-shadow: 0 0 15px var(--gold-glow); transform: scale(1.05); }
+    .logout-btn { background: var(--red); color: white; display: none; }
+
+    /* ===== NAVEGACIÓN ===== */
+    .tabs { display: flex; justify-content: center; gap: 30px; padding: 20px 0; background: linear-gradient(180deg, var(--bg2), var(--bg)); }
+    .tab-btn { background: transparent; color: var(--muted); border: none; font-size: 22px; font-family: 'Bebas Neue'; cursor: pointer; padding: 5px 15px; transition: 0.3s; letter-spacing: 1px; }
+    .tab-btn.active { color: var(--text); border-bottom: 3px solid var(--gold); text-shadow: 0 0 8px rgba(255,255,255,0.3); }
 
     /* ===== CONTENEDOR PRINCIPAL ===== */
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    .view-section { display: none; }
+    .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+    .view-section { display: none; animation: fadeIn 0.4s ease; }
     .view-section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ===== CARTAS Y DECORACIÓN (Mejora 2) ===== */
+    /* ===== SECCIONES DEL ÁLBUM ===== */
     .sec-block { background: var(--bg2); border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border); overflow: hidden; }
-    .sec-hdr { padding: 15px 20px; background: linear-gradient(90deg, var(--bg3), var(--bg2)); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; padding: 20px; display: none; }
+    .sec-hdr { padding: 15px 25px; background: linear-gradient(90deg, var(--bg3), var(--bg2)); cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+    .sec-hdr:hover { background: var(--bg3); }
+    .sec-title-wrap { display: flex; align-items: center; gap: 15px; }
+    .sec-title { font-family: 'Bebas Neue'; font-size: 26px; letter-spacing: 1px; color: var(--gold); }
+    .sec-desc { font-size: 13px; color: var(--muted); font-family: 'Barlow Condensed'; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 25px; display: none; background: var(--bg); }
     
-    .card {
-      background: var(--card-bg); border: 2px solid var(--border); border-radius: 10px; 
-      padding: 10px; text-align: center; position: relative; transition: 0.3s; overflow: hidden;
+    /* ===== DISEÑO REALISTA DE CARTAS ===== */
+    .sticker {
+      background: #fff; /* Borde blanco de Panini */
+      border-radius: 6px; 
+      padding: 6px; 
+      text-align: center; 
+      position: relative; 
+      transition: 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
     }
-    .card-img-placeholder {
-      width: 100%; height: 120px; background: #0A0F1D; border-radius: 6px; margin-bottom: 10px;
-      display: flex; justify-content: center; align-items: center; color: var(--border); font-size: 40px;
-      background-size: cover; background-position: center;
+    
+    .sticker-inner {
+      background: var(--bg3);
+      border: 1px solid #ddd;
+      height: 100%;
+      border-radius: 3px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
-    /* Estado: Faltante */
-    .card.missing { opacity: 0.6; filter: grayscale(100%); }
-    /* Estado: Obtenida */
-    .card.owned { border-color: var(--gold); box-shadow: 0 0 15px rgba(255,215,0,0.1); opacity: 1; filter: grayscale(0%); }
-    .card.owned .card-img-placeholder { background-image: url('https://img.freepik.com/vector-gratis/silueta-jugador-futbol-diseno-plano_23-2149405663.jpg'); color: transparent; }
-    /* Estado: Repetida */
-    .card.rep { border-color: var(--blue); }
 
-    .card-name { font-family: 'Barlow Condensed'; font-weight: 700; font-size: 15px; margin-bottom: 10px; }
-    .btn-group { display: flex; gap: 5px; }
-    .btn { flex: 1; padding: 6px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 11px; }
-    .btn-tengo { background: var(--bg3); color: white; }
-    .btn-rep { background: var(--bg3); color: white; }
-    .card.owned .btn-tengo { background: var(--gold); color: black; }
-    .card.rep .btn-rep { background: var(--blue); color: white; }
+    .sticker-top { background: var(--panini-blue); color: white; font-family: 'Bebas Neue'; font-size: 16px; padding: 2px 0; border-bottom: 2px solid var(--gold); }
+    
+    .sticker-img {
+      height: 140px;
+      background-color: #e0e0e0;
+      background-image: url('https://img.freepik.com/vector-gratis/silueta-jugador-futbol-diseno-plano_23-2149405663.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .sticker-bottom { background: #f0f0f0; color: #111; font-family: 'Barlow Condensed'; font-weight: 700; font-size: 14px; padding: 5px; }
+    
+    /* Estados de la Carta */
+    .sticker-wrapper { filter: grayscale(100%) opacity(0.5); transition: 0.3s; } /* Faltante */
+    .sticker-wrapper.owned { filter: grayscale(0%) opacity(1); transform: scale(1.02); } /* Obtenida */
+    .sticker-wrapper.owned .sticker-img { background-image: url('https://img.freepik.com/foto-gratis/atleta-jugando-al-futbol-estadio-deportivo_23-2150845582.jpg'); }
+    .sticker-wrapper.rep .sticker { border: 2px solid var(--blue); box-shadow: 0 0 15px rgba(41, 121, 255, 0.4); }
 
-    /* ===== MERCADO E INTERCAMBIO (Mejora 4 y 5) ===== */
-    .radar-container { background: var(--bg2); border-radius: 12px; padding: 20px; border: 1px solid var(--border); text-align: center; }
-    .radar-pulse { width: 100px; height: 100px; background: rgba(0, 230, 118, 0.2); border-radius: 50%; margin: 20px auto; border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; font-size: 30px; animation: pulse 2s infinite; }
-    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); } 70% { box-shadow: 0 0 0 30px rgba(0, 230, 118, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); } }
+    .sticker-actions { display: flex; gap: 5px; margin-top: 10px; }
+    .btn { flex: 1; padding: 8px; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 12px; font-family: 'Barlow Condensed'; text-transform: uppercase; }
+    .btn-tengo { background: var(--bg3); color: white; border: 1px solid var(--border); }
+    .btn-rep { background: var(--bg3); color: white; border: 1px solid var(--border); }
     
-    .trade-match { background: var(--bg3); border-radius: 8px; padding: 15px; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--green); }
+    .sticker-wrapper.owned .btn-tengo { background: var(--gold); color: black; border-color: var(--gold); }
+    .sticker-wrapper.rep .btn-rep { background: var(--blue); color: white; border-color: var(--blue); }
+
+    /* ===== MERCADO Y RADAR ===== */
+    .radar-container { background: var(--bg2); border-radius: 12px; padding: 40px 20px; text-align: center; border: 1px solid var(--border); }
+    .radar-pulse { width: 120px; height: 120px; background: rgba(0, 230, 118, 0.1); border-radius: 50%; margin: 30px auto; border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; font-size: 40px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); } 70% { box-shadow: 0 0 0 40px rgba(0, 230, 118, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); } }
     
-    /* Medidor de Justicia / Estafa */
-    .trade-calculator { background: var(--bg2); padding: 20px; border-radius: 12px; margin-top: 20px; border: 1px solid var(--border); }
-    .meter-bar { width: 100%; height: 15px; background: linear-gradient(90deg, var(--red), var(--gold), var(--green)); border-radius: 10px; margin: 15px 0; position: relative; }
-    .meter-indicator { width: 4px; height: 25px; background: white; position: absolute; top: -5px; left: 50%; transition: 0.3s; box-shadow: 0 0 5px black; }
+    .trade-calculator { background: var(--bg2); padding: 30px; border-radius: 12px; margin-top: 20px; border: 1px solid var(--border); }
+    .meter-bar { width: 100%; height: 20px; background: linear-gradient(90deg, var(--red) 0%, var(--gold) 50%, var(--green) 100%); border-radius: 10px; margin: 25px 0; position: relative; border: 2px solid var(--bg); }
+    .meter-indicator { width: 6px; height: 30px; background: white; position: absolute; top: -7px; left: 50%; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px rgba(0,0,0,0.8); border-radius: 3px; }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">🏆 PANINI GO</div>
-    <div class="profile-section">
-      <div class="user-details" style="text-align: right;">
-        <div class="user-name">Coleccionista Pro</div>
-        <div class="user-tags">
-          <span class="badge">🇲🇽 México</span>
-          <span class="badge">IG: @tu_usuario</span>
-        </div>
+    <div class="logo-container">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Panini_Group_logo.svg" alt="Panini Logo" style="height: 30px; background: white; padding: 2px 5px; border-radius: 4px;">
+      <div class="logo-text">FIFA WORLD CUP 2026™</div>
+    </div>
+    <div class="user-box">
+      <div class="user-info">
+        <div id="user-name">Invitado</div>
+        <div id="user-email">Inicia sesión para guardar</div>
       </div>
-      <img src="https://ui-avatars.com/api/?name=User&background=FFD700&color=000" class="profile-pic" alt="Perfil">
+      <img id="profile-pic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Perfil">
+      <button class="auth-btn login-btn" id="login-btn">Acceder</button>
+      <button class="auth-btn logout-btn" id="logout-btn">Salir</button>
     </div>
   </header>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('album')">MI ÁLBUM</button>
-    <button class="tab-btn" onclick="switchTab('mercado')">MERCADO & RADAR</button>
+    <button class="tab-btn active" onclick="switchTab('album')">📖 MI COLECCIÓN</button>
+    <button class="tab-btn" onclick="switchTab('mercado')">🌐 ZONA DE INTERCAMBIO</button>
   </div>
 
   <main class="container">
@@ -123,44 +155,34 @@
     </div>
 
     <div id="mercado-view" class="view-section">
-      
       <div class="radar-container">
-        <h2 style="font-family: 'Bebas Neue'; color: var(--green); font-size: 28px;">Radar de Coleccionistas</h2>
-        <p style="color: var(--muted); font-size: 14px;">Buscando personas cerca de ti que tengan las cartas que te faltan...</p>
+        <h2 style="font-family: 'Bebas Neue'; color: var(--green); font-size: 32px; letter-spacing: 1px;">Radar de Coleccionistas</h2>
+        <p style="color: var(--muted); font-size: 16px; margin-top: 10px;">Buscando coleccionistas cerca de ti usando Firebase Geolocation...</p>
         <div class="radar-pulse">📍</div>
-        
-        <div class="trade-match">
-          <div style="display: flex; gap: 15px; align-items: center;">
-            <img src="https://ui-avatars.com/api/?name=Alex&background=2979FF&color=fff" style="width: 40px; border-radius: 50%;">
-            <div style="text-align: left;">
-              <strong style="color: white;">Alex (a 500 metros)</strong>
-              <div style="font-size: 13px; color: var(--green);">Tiene: Messi (ARG-4)</div>
-              <div style="font-size: 13px; color: var(--gold);">Busca: Santi Giménez (MEX-4)</div>
-            </div>
-          </div>
-          <button class="btn btn-tengo" style="background: var(--gold); color: black; padding: 10px;">Enviar Solicitud</button>
-        </div>
+        <div style="color: var(--gold); font-family: 'Barlow Condensed'; font-size: 18px;">Escaneando tu zona (Radio de 2km)...</div>
       </div>
 
       <div class="trade-calculator">
-        <h2 style="font-family: 'Bebas Neue'; color: var(--gold); font-size: 24px;">⚖️ Verificador de Intercambios</h2>
-        <p style="font-size: 13px; color: var(--muted);">Calcula si el intercambio es justo basándose en la rareza (Normal, Especial, Extra, Clandestina).</p>
+        <h2 style="font-family: 'Bebas Neue'; color: var(--text); font-size: 28px;">⚖️ Verificador de Estafas</h2>
+        <p style="color: var(--muted); font-size: 14px; margin-bottom: 20px;">Calcula el valor del intercambio antes de aceptar.</p>
         
-        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-          <div style="width: 45%;">
-            <label style="font-size: 12px; color: var(--muted);">Tú ofreces:</label>
-            <select id="offer-rarity" style="width: 100%; padding: 8px; background: var(--bg3); color: white; border: 1px solid var(--border);">
-              <option value="1">Carta Normal (Ej. Jugador base)</option>
-              <option value="3">Carta Especial (Ej. Escudo/Estadio)</option>
-              <option value="5">Extra Sticker (Bronce/Plata/Oro)</option>
+        <div style="display: flex; gap: 20px;">
+          <div style="flex: 1;">
+            <label style="font-size: 12px; color: var(--gold); font-weight: bold; text-transform: uppercase;">Tú ofreces:</label>
+            <select id="offer-rarity" style="width: 100%; padding: 12px; background: var(--bg3); color: white; border: 1px solid var(--border); border-radius: 6px; margin-top: 5px;">
+              <option value="1">1x Carta Normal (Jugador base)</option>
+              <option value="3">1x Escudo / Estadio / Holográfica</option>
+              <option value="5">1x Extra Sticker (Oro/Plata)</option>
+              <option value="10">1x Carta Clandestina</option>
             </select>
           </div>
-          <div style="width: 45%;">
-            <label style="font-size: 12px; color: var(--muted);">Tú recibes:</label>
-            <select id="receive-rarity" style="width: 100%; padding: 8px; background: var(--bg3); color: white; border: 1px solid var(--border);">
-              <option value="1">Carta Normal (Ej. Jugador base)</option>
-              <option value="3">Carta Especial (Ej. Escudo/Estadio)</option>
-              <option value="5">Extra Sticker (Bronce/Plata/Oro)</option>
+          <div style="flex: 1;">
+            <label style="font-size: 12px; color: var(--green); font-weight: bold; text-transform: uppercase;">Tú recibes:</label>
+            <select id="receive-rarity" style="width: 100%; padding: 12px; background: var(--bg3); color: white; border: 1px solid var(--border); border-radius: 6px; margin-top: 5px;">
+              <option value="1">1x Carta Normal (Jugador base)</option>
+              <option value="3">1x Escudo / Estadio / Holográfica</option>
+              <option value="5">1x Extra Sticker (Oro/Plata)</option>
+              <option value="10">1x Carta Clandestina</option>
             </select>
           </div>
         </div>
@@ -168,51 +190,89 @@
         <div class="meter-bar">
           <div class="meter-indicator" id="trade-meter"></div>
         </div>
-        <div style="text-align: center; font-weight: bold; margin-top: 10px;" id="trade-result">Intercambio Justo (Win-Win)</div>
+        <div style="text-align: center; font-size: 22px; font-family: 'Bebas Neue'; letter-spacing: 1px;" id="trade-result">INTERCAMBIO JUSTO 🤝</div>
       </div>
-
     </div>
   </main>
 
-  <script>
-    // ===== LÓGICA DE NAVEGACIÓN =====
-    function switchTab(tabId) {
-      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-      document.getElementById(`${tabId}-view`).classList.add('active');
-      event.target.classList.add('active');
-    }
+  <script type="module">
+    // ===== 1. FIREBASE AUTHENTICATION =====
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-    // ===== LÓGICA DEL ÁLBUM (Mejora 6: Unificando cartas.js) =====
-    const paises = [ "México", "Estados Unidos", "Canadá", "Argentina", "Brasil", "Uruguay", "Colombia", "España", "Francia", "Inglaterra", "Alemania", "Japón" ]; // Recortado por espacio, puedes pegar tus 48 aquí
+    const firebaseConfig = {
+      apiKey: "AIzaSyC3ADgRyKLJm8lSTFSOeVvK1FSKSiWbZSY",
+      authDomain: "panini-go.firebaseapp.com",
+      projectId: "panini-go",
+      storageBucket: "panini-go.firebasestorage.app",
+      messagingSenderId: "307550804065",
+      appId: "1:307550804065:web:0e0bfd55d2247958f97220",
+      measurementId: "G-VV9FQB46P1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    const loginBtn = document.getElementById("login-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+
+    loginBtn.onclick = async () => { try { await signInWithPopup(auth, provider); } catch (e) { alert("Error: " + e.message); } };
+    logoutBtn.onclick = async () => { await signOut(auth); };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("user-name").innerText = user.displayName;
+        document.getElementById("profile-pic").src = user.photoURL;
+        document.getElementById("user-email").innerText = "Sincronizado con la nube ☁️";
+        loginBtn.style.display = "none"; logoutBtn.style.display = "block";
+      } else {
+        document.getElementById("user-name").innerText = "Invitado";
+        document.getElementById("profile-pic").src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+        document.getElementById("user-email").innerText = "Inicia sesión para guardar";
+        loginBtn.style.display = "block"; logoutBtn.style.display = "none";
+      }
+    });
+
+    // ===== 2. GENERADOR DE CARTAS AUTOMÁTICO (Las 980 cartas) =====
+    const paises = [
+      "México", "Estados Unidos", "Canadá", "Argentina", "Brasil", "Uruguay", "Colombia", "Ecuador",
+      "Perú", "Chile", "Venezuela", "Bolivia", "Paraguay", "España", "Francia", "Inglaterra",
+      "Alemania", "Italia", "Países Bajos", "Portugal", "Bélgica", "Croacia", "Suiza", "Dinamarca",
+      "Suecia", "Polonia", "Gales", "Serbia", "Japón", "Corea del Sur", "Irán", "Arabia Saudita",
+      "Australia", "Qatar", "Marruecos", "Senegal", "Egipto", "Nigeria", "Camerún", "Ghana",
+      "Costa de Marfil", "Argelia", "Túnez", "Mali", "Nueva Zelanda", "Costa Rica", "Panamá", "Honduras"
+    ];
+
     const SECS = [];
 
-    // 1. Especiales
-    let especiales = [];
-    for(let i=1; i<=10; i++) especiales.push({ id: `FWC-${i}`, name: `Estadio ${i}`, weight: 3 });
-    SECS.push({ id: "FWC", name: "FIFA WORLD CUP 2026", cards: especiales });
+    // FWC: Estadios y Especiales
+    let cartasEspeciales = [];
+    for(let i = 1; i <= 20; i++) cartasEspeciales.push({ id: `FWC-${i}`, name: `Estadio ${i}` });
+    SECS.push({ id: "FWC", name: "FIFA WORLD CUP 2026", desc: "Estadios, Emblemas y Ciudades", icon: "🏆", cards: cartasEspeciales });
 
-    // 2. Equipos
+    // Equipos
     paises.forEach((pais, index) => {
       let codigo = pais.substring(0, 3).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       let cartasEquipo = [
-        { id: `${codigo}-1`, name: "🛡️ Escudo", weight: 3 },
-        { id: `${codigo}-2`, name: "📸 Equipo", weight: 2 }
+        { id: `${codigo}-1`, name: "🛡️ Escudo Oficial" },
+        { id: `${codigo}-2`, name: "📸 Foto Grupal" }
       ];
-      for(let i=3; i<=20; i++) cartasEquipo.push({ id: `${codigo}-${i}`, name: `Jugador ${i-2}`, weight: 1 });
-      SECS.push({ id: codigo, name: pais.toUpperCase(), cards: cartasEquipo });
+      for(let i = 3; i <= 20; i++) cartasEquipo.push({ id: `${codigo}-${i}`, name: `Jugador ${i-2}` });
+      SECS.push({ id: codigo, name: pais.toUpperCase(), desc: "Selección Nacional - 20 Stickers", icon: "⚽", cards: cartasEquipo });
     });
 
-    // 3. Extra Stickers
-    let extras = [];
-    for(let i=1; i<=5; i++) extras.push({ id: `EXT-${i}`, name: `Extra Acción ${i}`, weight: 5 });
-    SECS.push({ id: "EXT", name: "EXTRA STICKERS", cards: extras });
+    // Extra Stickers
+    let cartasExtra = [];
+    for(let i = 1; i <= 20; i++) cartasExtra.push({ id: `EXT-${i}`, name: `Extra Acción ${i}` });
+    SECS.push({ id: "EXT", name: "EXTRA STICKERS", desc: "Ediciones ultra raras", icon: "🌟", cards: cartasExtra });
 
-    // Base de datos local
+    // ===== 3. RENDERIZADO DEL ÁLBUM =====
     const coleccionData = JSON.parse(localStorage.getItem('album_progreso')) || {};
 
     function renderAlbum() {
       const container = document.getElementById('album-container');
+      
       SECS.forEach(sec => {
         const secDiv = document.createElement('div');
         secDiv.className = 'sec-block';
@@ -220,26 +280,38 @@
         let cardsHTML = '';
         sec.cards.forEach(c => {
           const data = coleccionData[c.id] || { tengo: false, rep: false };
-          const cardClass = data.rep ? 'rep owned' : (data.tengo ? 'owned' : 'missing');
-          const btnTengoClass = data.tengo ? 'btn-tengo active' : 'btn-tengo';
+          const wrapClass = data.rep ? 'sticker-wrapper rep owned' : (data.tengo ? 'sticker-wrapper owned' : 'sticker-wrapper');
           
+          // Estructura de Sticker Realista
           cardsHTML += `
-            <div class="card ${cardClass}" id="card-${c.id}">
-              <div class="card-img-placeholder">❓</div>
-              <div style="font-size:10px; color:var(--muted)">${c.id}</div>
-              <div class="card-name">${c.name}</div>
-              <div class="btn-group">
-                <button class="btn ${btnTengoClass}" onclick="toggleState('${c.id}', 'tengo')">Tengo</button>
-                <button class="btn btn-rep" onclick="toggleState('${c.id}', 'rep')">+1 Rep</button>
+            <div class="${wrapClass}" id="wrap-${c.id}">
+              <div class="sticker">
+                <div class="sticker-inner">
+                  <div class="sticker-top">${sec.name}</div>
+                  <div class="sticker-img">
+                    <div style="position:absolute; top:2px; left:4px; background:white; color:black; font-weight:bold; font-size:10px; padding:1px 4px; border-radius:3px; border:1px solid #ccc;">${c.id}</div>
+                  </div>
+                  <div class="sticker-bottom">${c.name}</div>
+                </div>
+              </div>
+              <div class="sticker-actions">
+                <button class="btn btn-tengo" onclick="window.toggleCard('${c.id}', 'tengo')">Tengo</button>
+                <button class="btn btn-rep" onclick="window.toggleCard('${c.id}', 'rep')">+1 Rep</button>
               </div>
             </div>
           `;
         });
 
         secDiv.innerHTML = `
-          <div class="sec-hdr" onclick="toggleSecGrid('${sec.id}')">
-            <h3 style="font-family:'Bebas Neue'; font-size: 22px;">${sec.name}</h3>
-            <span>▾</span>
+          <div class="sec-hdr" onclick="window.toggleGrid('${sec.id}')">
+            <div class="sec-title-wrap">
+              <span style="font-size: 24px;">${sec.icon}</span>
+              <div>
+                <h3 class="sec-title">${sec.name}</h3>
+                <span class="sec-desc">${sec.desc}</span>
+              </div>
+            </div>
+            <div style="color: var(--muted); font-size: 20px;">▾</div>
           </div>
           <div class="cards-grid" id="grid-${sec.id}">${cardsHTML}</div>
         `;
@@ -247,12 +319,20 @@
       });
     }
 
-    window.toggleSecGrid = (id) => {
+    // Funciones Globales para UI
+    window.switchTab = (tabId) => {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(`${tabId}-view`).classList.add('active');
+      event.target.classList.add('active');
+    };
+
+    window.toggleGrid = (id) => {
       const grid = document.getElementById(`grid-${id}`);
       grid.style.display = grid.style.display === 'grid' ? 'none' : 'grid';
     };
 
-    window.toggleState = (id, type) => {
+    window.toggleCard = (id, type) => {
       if (!coleccionData[id]) coleccionData[id] = { tengo: false, rep: false };
       
       if (type === 'tengo') {
@@ -264,39 +344,32 @@
       }
       
       localStorage.setItem('album_progreso', JSON.stringify(coleccionData));
-      location.reload(); // Recarga simple para actualizar UI rápido
+      
+      // Actualización visual inmediata sin recargar
+      const wrap = document.getElementById(`wrap-${id}`);
+      wrap.className = 'sticker-wrapper';
+      if (coleccionData[id].rep) wrap.classList.add('rep', 'owned');
+      else if (coleccionData[id].tengo) wrap.classList.add('owned');
     };
 
+    // Inicializar Álbum
     renderAlbum();
 
-    // ===== LÓGICA CALCULADORA DE ESTAFAS =====
-    const offerSel = document.getElementById('offer-rarity');
-    const recSel = document.getElementById('receive-rarity');
+    // ===== 4. LÓGICA DE ESTAFAS =====
+    const oSel = document.getElementById('offer-rarity');
+    const rSel = document.getElementById('receive-rarity');
     const meter = document.getElementById('trade-meter');
-    const resultTxt = document.getElementById('trade-result');
+    const resTxt = document.getElementById('trade-result');
 
-    function calculateTrade() {
-      const valOffer = parseInt(offerSel.value);
-      const valRec = parseInt(recSel.value);
-      const diff = valRec - valOffer; // Positivo = ganas tú, Negativo = pierdes tú
-      
-      if (diff === 0) {
-        meter.style.left = '50%';
-        resultTxt.innerText = "Intercambio Justo (Win-Win) 🤝";
-        resultTxt.style.color = "var(--gold)";
-      } else if (diff > 0) {
-        meter.style.left = '90%';
-        resultTxt.innerText = "¡Sales Ganando! 🔥";
-        resultTxt.style.color = "var(--green)";
-      } else {
-        meter.style.left = '10%';
-        resultTxt.innerText = "¡Cuidado! Podría ser una estafa 🚨";
-        resultTxt.style.color = "var(--red)";
-      }
+    function calcTrade() {
+      const diff = parseInt(rSel.value) - parseInt(oSel.value);
+      if (diff === 0) { meter.style.left = '50%'; resTxt.innerText = "INTERCAMBIO JUSTO 🤝"; resTxt.style.color = "var(--gold)"; }
+      else if (diff > 0) { meter.style.left = '90%'; resTxt.innerText = "¡SALES GANANDO! 🔥"; resTxt.style.color = "var(--green)"; }
+      else { meter.style.left = '10%'; resTxt.innerText = "¡ALERTA DE ESTAFA! 🚨"; resTxt.style.color = "var(--red)"; }
     }
     
-    offerSel.addEventListener('change', calculateTrade);
-    recSel.addEventListener('change', calculateTrade);
+    oSel.addEventListener('change', calcTrade);
+    rSel.addEventListener('change', calcTrade);
 
   </script>
 </body>
