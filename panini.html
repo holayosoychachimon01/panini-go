@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Panini GO</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    min-height:100vh;
+    background:
+    linear-gradient(135deg,#07111f,#0f172a,#111827);
+    color:white;
+    overflow-x:hidden;
+}
+
+/* FONDO */
+
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    overflow:hidden;
+}
+
+.circle{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:0.25;
+}
+
+.c1{
+    width:300px;
+    height:300px;
+    background:#00ffbf;
+    top:-50px;
+    left:-50px;
+}
+
+.c2{
+    width:350px;
+    height:350px;
+    background:#00a2ff;
+    bottom:-80px;
+    right:-80px;
+}
+
+.c3{
+    width:250px;
+    height:250px;
+    background:#8b5cf6;
+    top:40%;
+    left:40%;
+}
+
+/* HEADER */
+
+header{
+    width:100%;
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.04);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.logo{
+    font-size:32px;
+    font-weight:900;
+    background:linear-gradient(90deg,#00ffbf,#00a2ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.user-box{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.user-box img{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    border:3px solid #00ffbf;
+    object-fit:cover;
+}
+
+/* BOTONES */
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.login-btn{
+    background:linear-gradient(90deg,#00ffbf,#00a2ff);
+    color:black;
+}
+
+.logout-btn{
+    background:#ef4444;
+    color:white;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+/* HERO */
+
+.hero{
+    padding:60px 30px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    max-width:700px;
+    margin:auto;
+    opacity:0.8;
+    font-size:18px;
+}
+
+/* CARTAS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:25px;
+    padding:40px;
+}
+
+.card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:22px;
+    overflow:hidden;
+    backdrop-filter:blur(10px);
+    transition:0.3s;
+    position:relative;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 25px rgba(0,255,191,0.3);
+}
+
+.card img{
+    width:100%;
+    height:240px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:15px;
+}
+
+.card-content h3{
+    margin-bottom:10px;
+}
+
+.owned{
+    color:#00ffbf;
+    font-weight:bold;
+}
+
+.missing{
+    color:#ff6b6b;
+    font-weight:bold;
+}
+
+/* PANEL */
+
+.panel{
+    margin:40px;
+    padding:25px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+}
+
+.panel h2{
+    margin-bottom:20px;
+}
+
+/* INPUTS */
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:12px;
+    background:#111827;
+    color:white;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:40px;
+    opacity:0.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+<div class="circle c1"></div>
+<div class="circle c2"></div>
+<div class="circle c3"></div>
+</div>
+
+<header>
+
+<div class="logo">
+PANINI GO
+</div>
+
+<div class="user-box">
+
+<img id="profile-pic"
+src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+
+<div>
+<div id="user-name">
+Invitado
+</div>
+
+<div id="user-country" style="opacity:0.7;font-size:14px;">
+Sin iniciar sesión
+</div>
+</div>
+
+<button class="login-btn" id="login-btn">
+Login Google
+</button>
+
+<button class="logout-btn" id="logout-btn" style="display:none;">
+Logout
+</button>
+
+</div>
+
+</header>
+
+<section class="hero">
+
+<h1>
+Colecciona. Intercambia. Completa.
+</h1>
+
+<p>
+Encuentra personas cerca de ti para intercambiar cartas,
+completa tu álbum y revisa si un intercambio vale la pena
+o si te están estafando.
+</p>
+
+</section>
+
+<section class="cards">
+
+<div class="card">
+
+<img src="https://images2.imgbox.com/ab/7a/JlV4s4Ej_o.png">
+
+<div class="card-content">
+<h3>Messi #10</h3>
+<div class="owned">✓ La tienes</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images2.imgbox.com/95/31/j4V7lM4K_o.png">
+
+<div class="card-content">
+<h3>Mbappé #7</h3>
+<div class="missing">✗ No la tienes</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images2.imgbox.com/37/98/G5n0hK0m_o.png">
+
+<div class="card-content">
+<h3>Lamine Yamal #19</h3>
+<div class="owned">✓ La tienes</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images2.imgbox.com/6e/0f/4RE1e4W6_o.png">
+
+<div class="card-content">
+<h3>Haaland #9</h3>
+<div class="missing">✗ No la tienes</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="panel">
+
+<h2>
+Sistema de Intercambio
+</h2>
+
+<input type="text" placeholder="Cartas que tienes">
+
+<input type="text" placeholder="Cartas que buscas">
+
+<br><br>
+
+<button>
+Buscar Intercambios Cercanos
+</button>
+
+</section>
+
+<footer>
+Panini GO © 2026
+</footer>
+
+<script type="module">
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+getAuth,
+GoogleAuthProvider,
+signInWithPopup,
+signOut,
+onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyC3ADgRyKLJm8lSTFSOeVvK1FSKSiWbZSY",
+
+authDomain: "panini-go.firebaseapp.com",
+
+projectId: "panini-go",
+
+storageBucket: "panini-go.firebasestorage.app",
+
+messagingSenderId: "307550804065",
+
+appId: "1:307550804065:web:0e0bfd55d2247958f97220",
+
+measurementId: "G-VV9FQB46P1"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const provider = new GoogleAuthProvider();
+
+const loginBtn =
+document.getElementById("login-btn");
+
+const logoutBtn =
+document.getElementById("logout-btn");
+
+loginBtn.onclick = async ()=>{
+
+try{
+
+await signInWithPopup(auth,provider);
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+logoutBtn.onclick = async ()=>{
+
+await signOut(auth);
+
+};
+
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+document.getElementById("user-name")
+.innerText = user.displayName;
+
+document.getElementById("profile-pic")
+.src = user.photoURL;
+
+document.getElementById("user-country")
+.innerText = user.email;
+
+loginBtn.style.display="none";
+
+logoutBtn.style.display="block";
+
+}else{
+
+document.getElementById("user-name")
+.innerText="Invitado";
+
+document.getElementById("profile-pic")
+.src="https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
+document.getElementById("user-country")
+.innerText="Sin iniciar sesión";
+
+loginBtn.style.display="block";
+
+logoutBtn.style.display="none";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
