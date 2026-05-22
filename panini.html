@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏆 Álbum FIFA World Cup 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== VARIABLES Y CONFIGURACIÓN DEL TEMA ===== */
+    :root {
+      --gold: #F5C518;
+      --gold2: #E8A800;
+      --gold3: #FFF0A0;
+      --green: #00D97E;
+      --green2: #00A85A;
+      --red: #FF3B4E;
+      --orange: #FF7B35;
+      --blue: #3B9EFF;
+      --blue2: #005FCC;
+      --bg: #050810;
+      --bg2: #0B1120;
+      --bg3: #111D35;
+      --bg4: #182440;
+      --card: #141E30;
+      --card2: #1A2845;
+      --border: #1E3055;
+      --border2: #2A4070;
+      --text: #F0F6FF;
+      --muted: #7A90B5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== BARRA DE NAVEGACIÓN Y AUTENTICACIÓN ===== */
+    #auth-header {
+      width: 100%;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg2);
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      color: var(--gold);
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-box {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-box img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      object-fit: cover;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #user-name {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    #user-email {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .auth-btn {
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: 0.2s ease;
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    .login-btn {
+      background: linear-gradient(90deg, var(--gold), var(--orange));
+      color: #000;
+    }
+
+    .login-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(245, 197, 24, 0.4);
+    }
+
+    .logout-btn {
+      background: var(--red);
+      color: white;
+    }
+
+    .logout-btn:hover {
+      background: #d32f2f;
+    }
+
+    /* ===== CONTENEDOR PRINCIPAL DEL ÁLBUM ===== */
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .album-hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .album-hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 56px;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .album-hero p {
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    /* Estructura de Bloques de Secciones */
+    .sec-block {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .sec-hdr {
+      padding: 20px;
+      background: var(--bg3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .sec-hdr:hover {
+      background: var(--bg4);
+    }
+
+    .sec-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sec-icon-wrap {
+      font-size: 24px;
+    }
+
+    .sec-info h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .sec-info p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .sec-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .sec-mini-prog {
+      text-align: right;
+    }
+
+    .sec-cnt {
+      font-weight: 700;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .sec-bar {
+      width: 100px;
+      height: 6px;
+      background: var(--bg);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .sec-bar-fill {
+      height: 100%;
+      background: var(--green);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .chev {
+      font-size: 20px;
+      color: var(--muted);
+      transition: transform 0.3s;
+    }
+
+    .sec-body {
+      padding: 25px;
+      border-top: 1px solid var(--border);
+      display: none;
+    }
+
+    /* Filtros de sección */
+    .sec-filters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .fbtn {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .fbtn.on {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+
+    /* Rejilla de Cartas */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+    }
+
+    .card-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .card-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-item.owned {
+      border-color: var(--green);
+      background: linear-gradient(to bottom, var(--card), rgba(0, 217, 126, 0.05));
+    }
+
+    .card-item.rep {
+      border-color: var(--blue);
+      background: linear-gradient(to bottom, var(--card), rgba(59, 158, 255, 0.05));
+    }
+
+    .card-num {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .act-btn {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      color: var(--text);
+      padding: 6px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .act-btn.btn-tengo.active {
+      background: var(--green);
+      color: #000;
+      border-color: var(--green);
+    }
+
+    .act-btn.btn-rep.active {
+      background: var(--blue);
+      color: white;
+      border-color: var(--blue);
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-size: 14px;
+      border-top: 1px solid var(--border);
+      margin-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header id="auth-header">
+    <div class="logo-title">🏆 PANINI GO 2026</div>
+    <div class="user-box">
+      <img id="profile-pic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Perfil">
+      <div class="user-info">
+        <div id="user-name">Invitado</div>
+        <div id="user-email">Sin iniciar sesión</div>
+      </div>
+      <button class="auth-btn login-btn" id="login-btn">Login Google</button>
+      <button class="auth-btn logout-btn" id="logout-btn" style="display:none;">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="album-hero">
+      <h1>Álbum Digital Oficial</h1>
+      <p>Gestiona tus cromos, marca tus repetidas y completa la colección del mundial.</p>
+    </section>
+
+    <div id="secs"></div>
+  </main>
+
+  <footer>
+    Panini GO © 2026 • Colecciona, Intercambia y Completa.
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+    // 1. Configuración de Firebase obtenida de tu panel panini-go
+    const firebaseConfig = {
+      apiKey: "AIzaSyC3ADgRyKLJm8lSTFSOeVvK1FSKSiWbZSY",
+      authDomain: "panini-go.firebaseapp.com",
+      projectId: "panini-go",
+      storageBucket: "panini-go.firebasestorage.app",
+      messagingSenderId: "307550804065",
+      appId: "1:307550804065:web:0e0bfd55d2247958f97220",
+      measurementId: "G-VV9FQB46P1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Elementos del DOM de Autenticación
+    const loginBtn = document.getElementById("login-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+
+    // Eventos de Autenticación
+    loginBtn.onclick = async () => {
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (error) {
+        alert("Error de autenticación: " + error.message);
+      }
+    };
+
+    logoutBtn.onclick = async () => {
+      await signOut(auth);
+    };
+
+    // Observador del Estado del Usuario
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("user-name").innerText = user.displayName;
+        document.getElementById("profile-pic").src = user.photoURL;
+        document.getElementById("user-email").innerText = user.email;
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "block";
+      } else {
+        document.getElementById("user-name").innerText = "Invitado";
+        document.getElementById("profile-pic").src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+        document.getElementById("user-email").innerText = "Sin iniciar sesión";
+        loginBtn.style.display = "block";
+        logoutBtn.style.display = "none";
+      }
+    });
+
+    // =========================================================================
+    // 2. SISTEMA DE DATOS Y RENDERIZADO DEL ÁLBUM
+    // =========================================================================
+    
+    // Base de datos de ejemplo del Álbum (puedes ampliar los arreglos de cartas)
+    const SECS = [
+      {
+        id: "FWC",
+        name: "FIFA WORLD CUP",
+        desc: "Estadios, emblemas y队 logos especiales",
+        icon: "✨",
+        cards: [
+          { id: "FWC-1", name: "Trofeo Oficial" },
+          { id: "FWC-2", name: "Logo México 2026" },
+          { id: "FWC-3", name: "Logo USA 2026" },
+          { id: "FWC-4", name: "Logo Canadá 2026" }
+        ]
+      },
+      {
+        id: "MEX",
+        name: "MÉXICO",
+        desc: "Selección Nacional de México",
+        icon: "🇲🇽",
+        cards: [
+          { id: "MEX-1", name: "Guillermo Ochoa" },
+          { id: "MEX-2", name: "César Montes" },
+          { id: "MEX-3", name: "Edson Álvarez" },
+          { id: "MEX-4", name: "Santiago Giménez" }
+        ]
+      },
+      {
+        id: "ARG",
+        name: "ARGENTINA",
+        desc: "Selección Albiceleste",
+        icon: "🇦🇷",
+        cards: [
+          { id: "ARG-1", name: "Emiliano Martínez" },
+          { id: "ARG-2", name: "Rodrigo de Paul" },
+          { id: "ARG-3", name: "Alexis Mac Allister" },
+          { id: "ARG-4", name: "Lionel Messi" }
+        ]
+      }
+    ];
+
+    // Estados Locales para Filtros y Colección (Temporal hasta conectar con Database)
+    const AF = {}; 
+    const coleccionData = JSON.parse(localStorage.getItem('album_progreso')) || {};
+
+    // Inicializar contenedores de renderizado
+    const SECS_CONTAINER = document.getElementById('secs');
+
+    // Funciones globales expuestas en la ventana para los atributos onclick tradicionales
+    window.toggleSec = (id) => {
+      const body = document.getElementById(`bdy-${id}`);
+      const chev = document.querySelector(`#hdr-${id} .chev`);
+      if (body.style.display === "block") {
+        body.style.display = "none";
+        chev.style.transform = "rotate(0deg)";
+      } else {
+        body.style.display = "block";
+        chev.style.transform = "rotate(180deg)";
+      }
+    };
+
+    window.setF = (secId, filterType, btn) => {
+      AF[secId] = filterType;
+      const buttons = btn.parentNode.querySelectorAll('.fbtn');
+      buttons.forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      filterCards(secId);
+    };
+
+    window.toggleCardState = (secId, cardId, stateType) => {
+      if (!coleccionData[cardId]) {
+        coleccionData[cardId] = { tengo: false, rep: false };
+      }
+
+      if (stateType === 'tengo') {
+        coleccionData[cardId].tengo = !coleccionData[cardId].tengo;
+        if (!coleccionData[cardId].tengo) coleccionData[cardId].rep = false;
+      } else if (stateType === 'rep') {
+        coleccionData[cardId].rep = !coleccionData[cardId].rep;
+        if (coleccionData[cardId].rep) coleccionData[cardId].tengo = true;
+      }
+
+      localStorage.setItem('album_progreso', JSON.stringify(coleccionData));
+      
+      // Actualizar Vista e Indicadores de Progreso
+      updateCardUI(secId, cardId);
+      updateSectionProgress(secId);
+    };
+
+    // Funciones de renderizado interno
+    function renderAlbum() {
+      SECS.forEach(s => {
+        AF[s.id] = 'all';
+        const d = document.createElement('div');
+        d.className = 'sec-block';
+        d.innerHTML = `
+          <div class="sec-hdr" id="hdr-${s.id}" onclick="toggleSec('${s.id}')">
+            <div class="sec-left">
+              <div class="sec-icon-wrap">${s.icon}</div>
+              <div class="sec-info">
+                <h3>${s.name}</h3>
+                <p>${s.desc}</p>
+              </div>
+            </div>
+            <div class="sec-right">
+              <div class="sec-mini-prog">
+                <div class="sec-cnt" id="cnt-${s.id}">0/${s.cards.length}</div>
+                <div class="sec-bar"><div class="sec-bar-fill" id="sbar-${s.id}"></div></div>
+              </div>
+              <span class="chev">▾</span>
+            </div>
+          </div>
+          <div class="sec-body" id="bdy-${s.id}">
+            <div class="sec-filters">
+              <button class="fbtn on" onclick="setF('${s.id}','all',this)">Todas (${s.cards.length})</button>
+              <button class="fbtn" onclick="setF('${s.id}','owned',this)">✅ Tengo</button>
+              <button class="fbtn" onclick="setF('${s.id}','rep',this)">🔁 Repetidas</button>
+              <button class="fbtn" onclick="setF('${s.id}','missing',this)">✗ Faltan</button>
+            </div>
+            <div class="cards-grid" id="grid-${s.id}"></div>
+          </div>
+        `;
+        SECS_CONTAINER.appendChild(d);
+        
+        // Renderizar las cartas de esta sección
+        const grid = document.getElementById(`grid-${s.id}`);
+        s.cards.forEach(c => {
+          const cardEl = document.createElement('div');
+          cardEl.className = 'card-item';
+          cardEl.id = `card-${c.id}`;
+          cardEl.innerHTML = `
+            <div class="card-num">${c.id}</div>
+            <div class="card-name">${c.name}</div>
+            <div class="card-actions">
+              <button class="act-btn btn-tengo" id="btn-tengo-${c.id}" onclick="toggleCardState('${s.id}','${c.id}','tengo')">Lo Tengo</button>
+              <button class="act-btn btn-rep" id="btn-rep-${c.id}" onclick="toggleCardState('${s.id}','${c.id}','rep')">Repetida</button>
+            </div>
+          `;
+          grid.appendChild(cardEl);
+          updateCardUI(s.id, c.id);
+        });
+
+        updateSectionProgress(s.id);
+      });
+    }
+
+    function updateCardUI(secId, cardId) {
+      const cardEl = document.getElementById(`card-${cardId}`);
+      const btnTengo = document.getElementById(`btn-tengo-${cardId}`);
+      const btnRep = document.getElementById(`btn-rep-${cardId}`);
+      const data = coleccionData[cardId] || { tengo: false, rep: false };
+
+      cardEl.classList.remove('owned', 'rep');
+      btnTengo.classList.remove('active');
+      btnRep.classList.remove('active');
+
+      if (data.rep) {
+        cardEl.classList.add('owned', 'rep');
+        btnTengo.classList.add('active');
+        btnRep.classList.add('active');
+      } else if (data.tengo) {
+        cardEl.classList.add('owned');
+        btnTengo.classList.add('active');
+      }
+
+      // Re-filtrar cartas para mantener la vista consistente si hay filtros activos
+      filterCards(secId);
+    }
+
+    function updateSectionProgress(secId) {
+      const section = SECS.find(s => s.id === secId);
+      const ownedCount = section.cards.filter(c => coleccionData[c.id]?.tengo).length;
+      const percentage = (ownedCount / section.cards.length) * 100;
+
+      document.getElementById(`cnt-${secId}`).innerText = `${ownedCount}/${section.cards.length}`;
+      document.getElementById(`sbar-${secId}`).style.width = `${percentage}%`;
+    }
+
+    function filterCards(secId) {
+      const section = SECS.find(s => s.id === secId);
+      const filter = AF[secId];
+
+      section.cards.forEach(c => {
+        const cardEl = document.getElementById(`card-${c.id}`);
+        const data = coleccionData[c.id] || { tengo: false, rep: false };
+
+        if (filter === 'all') {
+          cardEl.style.display = 'block';
+        } else if (filter === 'owned' && data.tengo) {
+          cardEl.style.display = 'block';
+        } else if (filter === 'rep' && data.rep) {
+          cardEl.style.display = 'block';
+        } else if (filter === 'missing' && !data.tengo) {
+          cardEl.style.display = 'block';
+        } else {
+          cardEl.style.display = 'none';
+        }
+      });
+    }
+
+    // Arrancar la renderización inicial del álbum
+    renderAlbum();
+  </script>
+</body>
+</html>
