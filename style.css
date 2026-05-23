@@ -1,0 +1,223 @@
+/* ====================== PANINI GO - FIFA WORLD CUP 2026 ====================== */
+:root {
+  --primary: #0033A0;
+  --accent: #FDB913;
+  --dark: #0B0E1A;
+  --card: #161B2C;
+  --text: #E8EDF7;
+  --muted: #94A3C2;
+  --radius: 20px;
+  --glow: 0 0 25px rgba(253, 185, 19, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Barlow', system-ui, sans-serif;
+  background: linear-gradient(135deg, #0B0E1A 0%, #1A2238 100%);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  height: 100vh;
+}
+
+/* ==================== SIDEBAR ==================== */
+.sidebar {
+  background: rgba(22, 27, 44, 0.98);
+  backdrop-filter: blur(16px);
+  border-right: 1px solid rgba(253, 185, 19, 0.25);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.7);
+}
+
+.logo-wrap {
+  padding: 32px 24px 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba(253,185,19,0.2);
+}
+
+.logo-wrap img {
+  max-width: 195px;
+  filter: drop-shadow(0 0 30px var(--accent));
+  transition: 0.4s ease;
+}
+
+.logo-wrap img:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 45px var(--accent));
+}
+
+.stats-bar {
+  padding: 20px 16px;
+  background: rgba(253,185,19,0.08);
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid rgba(253,185,19,0.2);
+}
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px;
+  color: var(--accent);
+  text-shadow: var(--glow);
+}
+
+/* ==================== NAV ==================== */
+.nav-item {
+  margin: 6px 12px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  background: rgba(253,185,19,0.15);
+  transform: translateX(8px);
+}
+
+.nav-item.active {
+  background: rgba(253,185,19,0.25);
+  border-left: 4px solid var(--accent);
+}
+
+.nav-count {
+  margin-left: auto;
+  font-family: 'Bebas Neue', sans-serif;
+  color: var(--accent);
+  font-size: 18px;
+}
+
+/* ==================== MAIN & CARDS ==================== */
+.main {
+  display: flex;
+  flex-direction: column;
+  background: var(--dark);
+}
+
+.topbar {
+  padding: 22px 32px;
+  background: rgba(11, 14, 26, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(253,185,19,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px;
+  background: linear-gradient(90deg, var(--accent), #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.album-viewport {
+  padding: 32px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.08);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.card:hover {
+  transform: translateY(-18px) scale(1.07);
+  box-shadow: var(--glow);
+  border-color: var(--accent);
+}
+
+.card-face {
+  height: 185px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 62px;
+  background: linear-gradient(135deg, #1e2937, #334155);
+  position: relative;
+  overflow: hidden;
+}
+
+.card.owned .card-face {
+  filter: brightness(1.2) saturate(1.4);
+}
+
+.card-owned-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: linear-gradient(135deg, var(--accent), #ffeb3b);
+  color: #000;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 15px;
+  box-shadow: 0 0 20px rgba(253,185,19,0.8);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.card.owned .card-owned-badge {
+  opacity: 1;
+}
+
+.card-body {
+  padding: 16px;
+  text-align: center;
+}
+
+.card-id {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+}
+
+.card-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+/* Toast */
+.toast {
+  background: linear-gradient(to right, #1A2238, #2A334F);
+  border: 2px solid var(--accent);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 20px;
+}
