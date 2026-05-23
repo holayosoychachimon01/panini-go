@@ -101,8 +101,8 @@ SECS.push({
 // Edición Clandestina
 const cartasBroma = [];
 const bromaNames = [
-  "El VAR se fue de vacaciones","Portero con las manos de mantequilla",
-  "El offside invisible","Penalti de mentiras","Árbitro sin lentes",
+  "Chabelo","miku",
+  "el tung tung tung sahur","Penalti de mentiras","Árbitro sin lentes",
   "Tiro libre al estadio de junto","El sustituto eterno",
   "Gol en propia meta","La camiseta equivocada","El himno en loop"
 ];
